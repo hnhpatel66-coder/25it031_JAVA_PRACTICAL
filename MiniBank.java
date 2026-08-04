@@ -61,7 +61,7 @@ public class MiniBank {
                     System.out.println("Thank you for using MiniBank.");
                     System.out.println("Good Bye!");
                     sc.close();
-                    return;
+                    //return;
                 }
 
                 default -> "Invalid Choice!";
