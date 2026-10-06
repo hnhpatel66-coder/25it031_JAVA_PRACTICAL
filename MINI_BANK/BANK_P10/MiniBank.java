@@ -3,8 +3,6 @@ import model.*;
 import exception.*;
 import service.*;
 
-import static util.Validator.validAmount;
-
 public class MiniBank {
 
     record BankInfo(String name, String branch) {}
@@ -30,8 +28,9 @@ public class MiniBank {
             processor.submit(() -> {
                 try {
                     account.deposit(100);
-                    System.out.println(Thread.currentThread().getName()
-                            + " deposited 100");
+                    System.out.println(
+                            Thread.currentThread().getName() + " deposited 100"
+                    );
                 } catch (InvalidAmountException e) {
                     System.out.println(e.getMessage());
                 }
@@ -42,8 +41,9 @@ public class MiniBank {
             processor.submit(() -> {
                 try {
                     account.withdraw(50);
-                    System.out.println(Thread.currentThread().getName()
-                            + " withdrew 50");
+                    System.out.println(
+                            Thread.currentThread().getName() + " withdrew 50"
+                    );
                 } catch (BankException e) {
                     System.out.println(e.getMessage());
                 }
@@ -62,7 +62,7 @@ public class MiniBank {
                     buffer.add(i);
                 }
             } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+                Thread.currentThread().interrupt();
             }
         }, "Producer");
 
@@ -73,7 +73,7 @@ public class MiniBank {
                     System.out.println("Processed: " + value);
                 }
             } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+                Thread.currentThread().interrupt();
             }
         }, "Consumer");
 
@@ -84,7 +84,7 @@ public class MiniBank {
             producer.join();
             consumer.join();
         } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
+            Thread.currentThread().interrupt();
         }
 
         Account accountA = new SavingsAccount("A", 5000, 0);
@@ -113,7 +113,7 @@ public class MiniBank {
             t1.join();
             t2.join();
         } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
+            Thread.currentThread().interrupt();
         }
 
         System.out.println("Account A: " + accountA.getBalance());
